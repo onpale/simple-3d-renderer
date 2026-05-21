@@ -30,7 +30,7 @@ let shapeObj = [];
 let shapeMesh = {};
 
 function preload() {
-    shapeObjLines = loadStrings("tv.obj");
+    shapeObjLines = loadStrings("monke.obj");
 }
 
 let cube1 = {
@@ -54,7 +54,7 @@ function setup() {
     shapeMesh = parseObj(shapeObjLines);
     let shape1 = {
         mesh: shapeMesh,
-        position: [0, -0.7, 5],
+        position: [0, 0, 5],
         rotation: [0, 0, 0],
         scale: [0.8, 0.8, 0.8],
     };
