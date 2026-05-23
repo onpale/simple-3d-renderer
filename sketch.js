@@ -181,7 +181,7 @@ function drawMesh(points, { edges }) {
 
 function parseObj(objLines) {
     let vertices = [];
-    let edges = [];
+    let edgesSet = new Set();
     for (let line of objLines) {
         if (line.split(" ")[0] == "v") {
             vertices.push([
@@ -193,27 +193,31 @@ function parseObj(objLines) {
             let spaceSplit = line.split(" ");
             for (let i = 1; i < spaceSplit.length; i++) {
                 if (i != spaceSplit.length - 1) {
-                    edges.push([
-                        spaceSplit[i].split("/")[0] - 1,
-                        spaceSplit[i + 1].split("/")[0] - 1,
-                    ]);
+                    edgesSet.add(
+                        [
+                            spaceSplit[i].split("/")[0] - 1,
+                            spaceSplit[i + 1].split("/")[0] - 1,
+                        ].sort(),
+                    );
                 } else {
-                    edges.push([
-                        spaceSplit[i].split("/")[0] - 1,
-                        spaceSplit[1].split("/")[0] - 1,
-                    ]);
+                    edgesSet.add(
+                        [
+                            spaceSplit[i].split("/")[0] - 1,
+                            spaceSplit[1].split("/")[0] - 1,
+                        ].sort(),
+                    );
                 }
             }
         } else if (line.split(" ")[0] == "l") {
             let spaceSplit = line.split(" ");
             for (let i = 1; i < spaceSplit.length - 1; i++) {
-                edges.push([
-                    line.split(" ")[i] - 1,
-                    line.split(" ")[i + 1] - 1,
-                ]);
+                edgesSet.add(
+                    [line.split(" ")[i] - 1, line.split(" ")[i + 1] - 1].sort(),
+                );
             }
         }
     }
+    edges = [...edgesSet];
     return {
         vertices: vertices,
         edges: edges,
